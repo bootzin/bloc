@@ -1,0 +1,63 @@
+#!/bin/bash
+#
+# Searches system for a file or directory
+
+database=/home/konig/Software/bloc/bloc.db
+searcher='rg -Np'
+
+function help {
+echo "Usage: bloc [OPTIONS] FILE
+Searches system for a file or directory
+    -h, --help 		displays this help message and exits.
+    -c <database>	specifies where to load the database from
+    -s <searcher>	specifies searcher to be used. Defaults to ripgrep. Additional commands may be used within '' i.e. 'grep -v'
+    -v 			verbose
+    --populate <output>	populate bloc database and saves it to <output>. Default saves to ~/Software/bloc.db"
+}
+
+
+
+if [ $# -gt 0 ]; then
+while [ -n "$1" ]
+do
+	case $1 in
+	-c) 	shift 
+		database=$1
+		;;
+	-s) 	shift
+		searcher=$1
+		;;
+	-v)
+		verbose=true
+		;;
+	-h*)	help
+		exit
+		;;	
+	--populate) 
+		shift
+		if [ $# -gt 0 ]; then
+			bloc-populate -o $1
+		else
+			bloc-populate
+		fi
+		exit
+		;;	
+	*)	file=$1
+		;;
+	esac
+shift
+done
+
+
+($searcher $file $database)
+
+if [ $verbose ]; then
+	echo "Searched for `tput setaf 1`\"$file\" `tput sgr0`with database:`tput setaf 1`[$database] `tput sgr0`using `tput setaf 1`\"$searcher\"`tput sgr0`"
+fi
+
+else
+	help
+fi 
+
+
+
