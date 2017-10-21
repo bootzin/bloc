@@ -11,7 +11,7 @@ whereas this means that the database file is larger, it also means that it doesn
 * 2: `bloc` uses [rg](https://github.com/BurntSushi/ripgrep) to search for it's files, which provides a much faster result than most other search tools.
     
 ### Prerequisites
-* [rg](https://github.com/BurntSushi/ripgrep) (Optional if you change the default search in the bloc file)
+* [rg](https://github.com/BurntSushi/ripgrep) (Optional if you change the default searching tool in the bloc file)
 
 ### Installation
 
@@ -32,33 +32,38 @@ As this is the first release of `bloc` no official installation is provided, but
     sudo chmod +x /path/to/bloc
     sudo chmod +x /path/to/bloc-populate
    
-**4.** [Optional] Grant root privileges to `bloc-populate` using the following commands:
-
-    sudo chown root.root path/to/bloc-populate
-    sudo chmod 4755 /path/to/bloc-populate
-    
-
-**5.** Run `bloc-populate` or `bloc --populate` in order to create the initial database
+**4.** Run `bloc-populate` or `bloc --populate` in order to create the initial database
     bloc --populate
     
-**6.** [Optional] Add on your autostart script an execution command to populate bloc database, so that when you start the system it gets automatically updated
+**5.** [Optional] Add on your autostart script an execution command to populate bloc database, so that when you start the system it gets automatically updated
 
 ### Usage
 
     Usage: bloc [OPTIONS] FILE
     Searches system for a file or directory
         -h, --help 		displays this help message and exits.
-        -c <database>	specifies where to load the database from
-        -s <searcher>	specifies searcher to be used. Defaults to ripgrep. Additional commands may be used within '' i.e. 'grep -v'
-        -v 			verbose
-        --populate <output>	populate bloc database and saves it to <output>. Default saves to ~/Software/bloc.db
+        -c <database>		specifies where to load the database from
+        -s <searcher>		specifies searcher to be used. Defaults to ripgrep. Additional commands may be used within '' i.e. 'grep -v'
+        -v, --verbose		verbose
+	-v2, -vv		Second verbosity level, more information is shown
+        -p, --populate <output>	populate bloc database and saves it to <output>. Default saves to ~/Software/bloc.db
 
 ### Tips
 
+* By default `bloc` does not detect directories and files you do not normally have access to. To change this, simply run `bloc` as sudo, and it will detect /root/ files as well
 * You can use any searcher you want with bloc (grep, ag, ack ...), as long as you pass it as an argument using the `-s` tag or change the default searcher command on bloc file
 * If you want to add any arguments to the searcher (i.e. -v, -E, -N) you can do so by specifing them with the `-s` tag, they should all work just right!
 * You can populate `bloc` database by running `bloc -p` instead of `bloc-populate`
 * bloc-populate can recieve an output file as an argument when used with the `-o` tag
+* You can use the `-c` tag on `bloc` to make it search for any file, not just its database
+
+### Troubleshooting
+
+If you're getting /root/path/to/db instead of /home/user/path/to/db in when running `bloc-populate` make sure you have the following line in your sudoers file:
+
+	Default env_keep += "HOME"
+
+Besides that, leave me an Issue reporting the steps necessary to reproduce the error you've got and I'll look into it
 
 ### License
 

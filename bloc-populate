@@ -1,26 +1,40 @@
 #!/bin/bash
 #Populate bloc database
 
-OUTPUT=/home/konig/Software/bloc/bloc.db
+output=$HOME/Software/bloc/bloc.db
 
 function usage {
 	echo "Usage: populate-bloc [options]
-    -h		print this message 
-    -v 		verbose
-    -o 		specify output database file. default: ~/Software/bloc/bloc.db"
+    -h, --help			print this message 
+    -v, --verbose 		verbose
+    -vv,-v2			second verbosity level, more data shown
+    -o <output.db>		specify output database file. default: $HOME/Software/bloc/bloc.db"
 }
 
-if test -n "$1"; then
+if [ $# -gt 0 ]; then
+while [ -n "$1" ]
+do
 case $1 in
 	-o)
-		OUTPUT=$2
+		shift
+		case $1 in
+			-*|"")
+				;;
+			*)
+				output=$1
+				;;
+		esac
 		;;
-	-h)
+	-h|--help)
 		usage
 		exit
 		;;
-	-v)
+	-v|--verbose)
 		verbose=true
+		;;
+	-v2|-vv)
+		verbose=true
+		verbose2=true
 		;;
 	
 	*)
@@ -28,10 +42,16 @@ case $1 in
 		exit
 		;;
 esac
+shift
+done
 fi
 
-(find / 2>/dev/null > $OUTPUT)
+if [ $verbose2 ]; then
+	find / > $output
+else
+	(find / 2>/dev/null > $output)
+fi
 
 if [ $verbose ]; then
-echo "Generating database file on $OUTPUT"
+	echo "Generated database file on $output"
 fi
