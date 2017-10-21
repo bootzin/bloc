@@ -45,7 +45,7 @@ As this is the first release of `bloc` no official installation is provided, but
         -c <database>		specifies where to load the database from
         -s <searcher>		specifies searcher to be used. Defaults to ripgrep. Additional commands may be used within '' i.e. 'grep -v'
         -v, --verbose		verbose
-	-v2, -vv		Second verbosity level, more information is shown
+        -v2, -vv		Second verbosity level, more information is shown
         -p, --populate <output>	populate bloc database and saves it to <output>. Default saves to ~/Software/bloc.db
 
 ### Tips
