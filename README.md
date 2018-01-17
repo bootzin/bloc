@@ -15,7 +15,9 @@ whereas this means that the database file is larger, it also means that it doesn
 
 ### Installation
 
-As `bloc` is still in it's early development, no official installation is provided, but here is what you need to do if you want to run `bloc` in your computer:
+Installation of `bloc` can be made by running the install script provided, it needs two arguments, or it won't work. The first is the install directory. As of now, the script will create a symbolic link into that specified install folder, and add that folder to $PATH, a later release will allow you to choose whether to have it symlinked or hard copied. The second argument is the place where you want to store the database, and where the database will be stored by default on future updates. Please keep in mind that neither of these values have a default yet, it shall be added soon though.
+
+The other option that you have is to follow below instructions, in case you have any problems with the installation script.
 
 **1.** Clone this repo to your local machine
     
