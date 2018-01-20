@@ -1,14 +1,14 @@
 #!/bin/bash
 #Populate bloc database
 
-output=$HOME/Software/bloc/bloc.db
+output=#DEFAULT
 
 function usage {
 	echo "Usage: populate-bloc [options]
     -h, --help			print this message 
     -v, --verbose 		verbose
     -vv,-v2			second verbosity level, more data shown
-    -o <output.db>		specify output database file. default: $HOME/Software/bloc/bloc.db"
+    -o <output.db>		specify output database file. default: #DEFAULT"
 }
 
 if [ $# -gt 0 ]; then
